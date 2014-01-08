@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <link type="text/css" rel="stylesheet" href="css/style.css" />
+    <script src="lib/jquery-1.10.2.min.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/MessageManager.js"></script>
+    <script src="js/FocusManager.js"></script>
+    <script src="js/FacebookManager.js"></script>
+    <script src="Application.js"></script>
+    <script>
+    function onLoad() {
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '210044882516375',
+                status     : true, // check login status
+                cookie     : true, // enable cookies to allow the server to access the session
+                xfbml      : true  // parse XFBML
+            });
+
+            var app = new Application();
+            app.init();
+        };
+
+        (function(d){
+            var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement('script'); js.id = id; js.async = true;
+            js.src = "//connect.facebook.net/en_US/all/debug.js";
+            ref.parentNode.insertBefore(js, ref);
+        }(document));
+    }
+    </script>
+</head>
+<body onLoad="onLoad();">
+    <div id="fb-root"></div>
+    <header>
+        <div id="login"></div>
+        <div id="progress" class="hidden"></div>
+    </header>
+
+    <div id="content">
+        <div id="user-list"></div>
+        <div id="message-list"></div>
+    </div>
+
+</body>
+</html>

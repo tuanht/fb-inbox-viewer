@@ -1,0 +1,82 @@
+body {
+    margin: 0;
+    font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
+    font-size: 12px;
+    background-color: #EEE;
+}
+
+header {
+    background-color: #3b5998;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 15px;
+    font-size: 16px;
+    color: #FFF;
+}
+
+#login {
+    float: left;
+}
+
+#progress {
+    float: right;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+article {
+    border: 1px solid;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+#content {
+    overflow: hidden;
+    margin: 0 auto;
+    width: 720px;
+    height: 480px;
+    background-color: white;
+}
+
+#user-list {
+    float: left;
+    width: 30%;
+    height: 480px;
+    overflow-y: scroll;
+}
+
+#user-list ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+    border-right: 1px solid #EEE;
+}
+
+#user-list ul li {
+    padding: 10px 10px 10px 60px;
+    border-top: 1px solid #EEE;
+    height: 30px;
+}
+
+#user-list ul li:first-child {
+    border-top: none;   
+}
+
+#user-list .focus {
+    background-color: #3b5998;
+    color: white;
+    border-top: none;
+}
+
+#message-list {
+    float: left;
+    width: 70%;
+    height: 480px;
+    overflow-y: scroll;
+}
+
+#message-list p {
+    margin: 1em;
+}
