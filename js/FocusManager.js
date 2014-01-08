@@ -17,11 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-function FocusManager() {
-
-}
-
-FocusManager.prototype = {
+FocusManager = $class(Object, {
     currentFocus: null,
 
     onClick: function(node) {
@@ -31,7 +27,7 @@ FocusManager.prototype = {
 
         fbcloud.MessageControl.view.updateMessageView(node.getAttribute("thread-id"));
     }
-};
+});
 
 FocusManager.eventListener = function(node, ctrl) {
     return function() {

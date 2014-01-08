@@ -17,18 +17,19 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-function MessageController(id, name) {
-    this.id = id;
-    this.name = name;
-
-    this.view = new MessageView(this);
-}
-
-MessageController.prototype = {
+MessageController = $class(BaseController, {
     id: null,
     name: "",
-    model: null,
-    view: null,
+
+    init: function(id, name) {
+        this.parent();
+        this.id = id;
+        this.name = name;
+    },
+
+    getView: function() {
+        return new MessageView();
+    },
 
     createModel: function(res) {
         this.model = new Array();
@@ -56,20 +57,6 @@ MessageController.prototype = {
             }, this);
         }, this);
     },
-
-    // unshiftComment: function(id, fromId, fromName, body, modelIndex) {
-    //     this.model[modelIndex].comments.unshift(this.createCommentElement(
-    //         id, fromId, fromName, body, modelIndex));
-    // },
-
-    // createCommentElement: function(id, fromId, fromName, body, modelIndex) {
-    //     return {
-    //         id: id,
-    //         body: body,
-    //         fromId: fromId,
-    //         fromName: fromName
-    //     };
-    // },
 
     getNext: function(url, modelIndex) {
         var self = this;
@@ -136,14 +123,9 @@ MessageController.prototype = {
 
         return i;
     }
-}
+});
 
-function MessageView(ctrl) {
-    this.ctrl = ctrl;
-}
-
-MessageView.prototype = {
-    ctrl: null,
+MessageView = $class(BaseView, {
 
     updateView: function(mainNodeId) {
         var mainNode = document.getElementById(mainNodeId);
@@ -295,7 +277,7 @@ MessageView.prototype = {
 
         return p;
     }
-}
+});
 
 MessageController.profilePictureCallback = function(modelIndex, toIndex) {
     return function(response) {

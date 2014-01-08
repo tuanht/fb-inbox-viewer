@@ -28,18 +28,12 @@
 //     // });
 // };
 
-function FacebookController() {
-    this.view = new FacebookView(this);
-}
-
-FacebookController.prototype = {
+FacebookController = $class(BaseController, {
     LOGIN_STATUS_CONNECTED: "connected",
     LOGIN_STATUS_NOT_AUTHORIZED: "not_authorized",
 
-    model: null,
-    view: null,
-
     init: function() {
+        this.parent();
         var self = this;
         FB.getLoginStatus(function(response) {
             if (response.status === self.LOGIN_STATUS_CONNECTED) {
@@ -52,6 +46,10 @@ FacebookController.prototype = {
                 self.loginRequire();
             }
         });
+    },
+
+    getView: function() {
+        return new FacebookView();
     },
 
     logged: function(response) {
@@ -82,14 +80,9 @@ FacebookController.prototype = {
             scope: 'email,,read_stream,publish_stream,read_mailbox'
         });
     }
-}
+});
 
-function FacebookView(ctrl) {
-    this.ctrl = ctrl;
-}
-
-FacebookView.prototype = {
-    ctrl: null,
+FacebookView = $class(BaseView, {
 
     updateLogoutButton: function(fbName) {
         var node = document.getElementById("login");
@@ -119,7 +112,7 @@ FacebookView.prototype = {
 
         node.appendChild(a);
     }
-}
+});
 
 
 // function callbackFeed(res) {

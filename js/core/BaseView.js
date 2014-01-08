@@ -17,16 +17,11 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-var fbcloud = {};
+BaseView = $class(Object, {
+    ctrl: null,
+    model: null,
 
-function Application() {
-
-}
-
-Application.prototype = {
     init: function() {
-        fbcloud.MessageControl = null;
-        fbcloud.FocusControl = focusManager;
-        fbcloud.FacebookControl = new FacebookController();
+        
     }
-}
+});
