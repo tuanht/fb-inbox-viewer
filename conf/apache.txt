@@ -1,0 +1,10 @@
+<IfModule alias_module>
+    Alias /fb "/fb-inbox-viewer"
+</IfModule>
+
+<Directory "/fb-inbox-viewer">
+    Options Includes FollowSymLinks MultiViews
+    AllowOverride All
+    Order allow,deny
+    Allow from all
+</Directory>
