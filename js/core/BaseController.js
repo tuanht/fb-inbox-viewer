@@ -22,7 +22,9 @@ BaseController = $class(Object, {
     model: null,
 
     init: function() {
-        this.view = this.getView();
-        this.view.ctrl = this;
+        if (this.getView) {
+            this.view = this.getView.apply(this, arguments);
+            this.view.ctrl = this;
+        }
     }
 });
