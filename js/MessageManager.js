@@ -128,17 +128,24 @@ MessageController = $class(BaseController, {
 MessageView = $class(BaseView, {
 
     updateView: function(mainNodeId) {
-        var mainNode = document.getElementById(mainNodeId);
+        var mainNode = $id(mainNodeId);
         mainNode.innerHTML = "";
-        var ul = document.createElement("ul");
+        var ul = $createElement("ul");
         var li = null;
 
         this.ctrl.model.forEach(function(element, index, array) {
-            li = document.createElement("li");
-            li.appendChild(document.createTextNode(this.getToLabel(element.to)));
+            li = $createElement("li");
+
+            var div = $createElement("div");
+            div.className = "thread-name";
+            $setText(div, this.getToLabel(element.to));
+
+            li.appendChild(div);
+
             li.setAttribute("thread-id", element.threadId);
             li.setAttribute("to-id", this.getToId(element.to));
             li.addEventListener("click", FocusManager.eventListener(li, fbcloud.FocusControl));
+
             ul.appendChild(li);
         }, this);
 
@@ -159,29 +166,64 @@ MessageView = $class(BaseView, {
         if (ul) {
             for (var i = 0; i < ul.children.length; i++) {
                 var li = ul.children[i];
-                var toId = li.getAttribute("to-id").split(","), thread = null;
+
+                var toId = li.getAttribute("to-id").split(",");
+                var thread = this.ctrl.model[
+                    this.ctrl.getThreadIndex(li.getAttribute("thread-id"))];
+
                 if (toId.length == 1) {
                     // single chat
-                    thread = this.ctrl.model[this.ctrl.getThreadIndex(li.getAttribute("thread-id"))];
-                    var url = this.getSingleProfilePicture(thread.to);
-                    li.style.background = "url(" + url + ") no-repeat left center";
+                    li.insertBefore(
+                        this.getSingleProfilePictureImgTag(thread.to),
+                        li.children[0]);
                 } else {
                     // group chat
+                    li.insertBefore(
+                        this.getMultiProfilePictureDivTag(thread.to),
+                        li.children[0]);
                 }
             }
         }
     },
 
-    getSingleProfilePicture: function(to) {
-        var url = "";
+    getSingleProfilePictureImgTag: function(to) {
+        var img = null;
+
         to.every(function(e, i, a) {
             if (e.id != this.ctrl.id) {
-                url = e.pictureUrl;
+                img = $createElement("img");
+                img.src = e.pictureUrl;
+                img.className = "large";
                 return false;
             }
             return true;
         }, this);
-        return url;
+
+        if (!img) {
+            // default profile picture
+        }
+
+        return img;
+    },
+
+    getMultiProfilePictureDivTag: function(to) {
+        var div = $createElement("div");
+        div.className = "pgrouper";
+
+        to.every(function(e, i, a) {
+            if (e.id != this.ctrl.id) {
+                var img = $createElement("img");
+                img.src = e.pictureUrl;
+                img.className = "small";
+                div.appendChild(img);
+            }
+
+            if (div.children.length >= 4) return false;
+
+            return true;
+        }, this);
+
+        return div;
     },
 
     getToLabel: function(to) {
@@ -224,7 +266,7 @@ MessageView = $class(BaseView, {
 
         var thread = this.ctrl.model[index];
 
-        var msgNode = document.getElementById("message-list");
+        var msgNode = $id("message-list");
         msgNode.innerHTML = "";
 
         thread.comments.forEach(function(e, i, a) {
@@ -241,7 +283,7 @@ MessageView = $class(BaseView, {
 
     insertMessageView: function(comments, modelIndex) {
         var self = this;
-        var msgNode = document.getElementById("message-list");
+        var msgNode = $id("message-list");
         var firstNode = msgNode.children[0];
 
         comments.forEachEnd(function(element, index, array) {
@@ -254,7 +296,7 @@ MessageView = $class(BaseView, {
     },
 
     updateProgress: function(num, isComplete) {
-        var node = document.getElementById("progress");
+        var node = $id("progress");
         node.className = "";
 
         if (isComplete) {
@@ -265,22 +307,16 @@ MessageView = $class(BaseView, {
     },
 
     createMessageLine: function(name, body) {
-        var p = document.createElement("p");
+        var p = $createElement("p");
 
-        var strong = document.createElement("strong");
+        var strong = $createElement("strong");
         strong.appendChild(document.createTextNode(name + ": "));
         p.appendChild(strong);
 
-        var span = document.createElement("span");
+        var span = $createElement("span");
         span.innerHTML = body ? body.replace(/(\r\n|\n|\r)/gm, "<br>") : "";
         p.appendChild(span);
 
         return p;
     }
 });
-
-MessageController.profilePictureCallback = function(modelIndex, toIndex) {
-    return function(response) {
-        console.log(response + "_" + modelIndex + "_" + toIndex);
-    };
-}

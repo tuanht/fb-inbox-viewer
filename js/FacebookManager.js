@@ -85,10 +85,10 @@ FacebookController = $class(BaseController, {
 FacebookView = $class(BaseView, {
 
     updateLogoutButton: function(fbName) {
-        var node = document.getElementById("login");
+        var node = $id("login");
         node.appendChild(document.createTextNode("Logged as " + fbName + " "));
 
-        var a = document.createElement("a");
+        var a = $createElement("a");
         a.setAttribute("href", "#");
         a.appendChild(document.createTextNode("Logout"));
         a.addEventListener("click", function() {
@@ -101,9 +101,9 @@ FacebookView = $class(BaseView, {
     updateLoginButton: function() {
         var self = this;
 
-        var node = document.getElementById("login");
+        var node = $id("login");
 
-        var a = document.createElement("a");
+        var a = $createElement("a");
         a.setAttribute("href", "#");
         a.appendChild(document.createTextNode("Login"));
         a.addEventListener("click", function() {

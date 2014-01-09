@@ -35,7 +35,7 @@ article {
 #content {
     overflow: hidden;
     margin: 0 auto;
-    width: 720px;
+    width: 960px;
     height: 480px;
     background-color: white;
 }
@@ -55,19 +55,45 @@ article {
 }
 
 #user-list ul li {
-    padding: 10px 10px 10px 60px;
-    border-top: 1px solid #EEE;
-    height: 30px;
+    padding: 5px;
+    box-shadow: inset 0 0 1px #EEE;
+    height: 50px;
 }
 
 #user-list ul li:first-child {
-    border-top: none;   
+    box-shadow: none;
+}
+
+#user-list .large {
+    float: left;
+    position: relative;
+}
+
+#user-list .pgrouper {
+    float: left;
+    width: 50px;
+    height: 50px;
+}
+
+#user-list .small {
+    width: 25px;
+    height: 25px;
+}
+
+#user-list .thread-name {
+    margin-left: 50px;
+    padding: 10px;
+    height: 30px;
+    line-height: 30px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 #user-list .focus {
     background-color: #3b5998;
     color: white;
-    border-top: none;
+    box-shadow: none;
 }
 
 #message-list {

@@ -40,6 +40,10 @@ function $id(id) {
     return document.getElementById(id);
 }
 
+function $createElement(tagName) {
+    return document.createElement(tagName);
+}
+
 function $setText(node, text) {
     if(text != null) {
         node.textContent = text;
